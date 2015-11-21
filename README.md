@@ -23,11 +23,11 @@ ship is sunk. When all the ships have been sunk, the game is over.
 Part I. (60 points) Develop a Haskell module named Board to model a
 Battleship board. The module should define the following functions.
 
-1. (5 points) Creating a board and checking the game status
+✓1. (5 points) Creating a board and checking the game status
    mkBoard n
    Return an empty nxn board, where n is a positive number.
 
-   isGameOver board
+  1. isGameOver board
    True if all the ships placed on the given board have been sunk.
 
 2. (20 points) Placing a ship
@@ -49,7 +49,7 @@ Battleship board. The module should define the following functions.
    Hit the square at the position (x,y) of the given board, where x 
    and y are 1-based column and row indices. A new board is returned.
 
-4. (20 points) Printing a board
+✓4. (20 points) Printing a board
    boardToStr marker board
    Return a string representation of the given board produced with
    the given marker. A marker is a function that takes a square of
