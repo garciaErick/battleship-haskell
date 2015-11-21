@@ -1,5 +1,5 @@
 module Main where
 	import Battleship
-	main =  
-		do
-			
+
+	main = do
+		printBoard board	

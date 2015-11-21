@@ -58,4 +58,11 @@ contains x(h:t) = x == h || contains x t
 --foldl1 _ [] = 
 --foldl1 (+) [1,2,3] = (1+2) + 3
 --foldl1 (+) [1,2,3] = ((0 + 1) + 2) + 3 
---foldl1 1 _ [x] = x 
+--foldl1 1 _ [x] = x
+If Statement 
+	--getBoolean :: Bool -> [Char]
+	--getBoolean n = 
+	--	if n == True
+	--		then "1"
+	--	else 
+	--		"0"

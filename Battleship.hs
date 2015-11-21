@@ -1,17 +1,19 @@
 module Battleship where
-	type Board = [[Bool]]
-
+	import Data.List
+	import System.IO
+	
+	type Board = [[Int]]
 	mkBoard :: Int -> Board
 	mkBoard 0 = [[]]
 	mkBoard n = 
 		if n >= 0 
-			then take n (repeat (take n (repeat False)))
-		else [[False]]
+			then take n (repeat (take n (repeat 0)))
+		else [[0]]
 	type Coordinate = (Int, Int, Bool)
 
 	board = mkBoard 10
-	getRow n = board!! n
-	printRow n = [ getBoolean x | x <- getRow n]
+	getRow n = board !! n
+	printRow n = [ toString x | x <- getRow n]
 	--placeShip ::  Coordinate -> Board
 	list = [[False, True, False, False, False],[False, False, False, False, False]]
 	tuple1 = (1,2,True)
@@ -39,42 +41,19 @@ module Battleship where
 
 
 
+	list1 :: [[Int]]
+	list1 = [[1,0,0],[0,1,0],[0,0,1]]
+	valueOf :: Int -> Char
+	valueOf 0 = '0' -- Default Place
+	valueOf 1 = 'M' -- Minesweeper
+	valueOf 2 = 'S' -- Submarine
+	valueOf 3 = 'F' -- Frigate
+	valueOf 4 = 'B' -- Battleship
+	valueOf 5 = 'A' -- Aircraft Carrier
+	valueOf _ = 'x' -- Place Hit
 
-
-
-
-
-	printStringNTimes 0 = return ()
-	printStringNTimes n =
-	 do
-	  putStr "0 "
-	  printStringNTimes (n-1)
-
-	--printBoard 0 = return ()
-	--printBoard n = 
-	--	do
-	--		printStringNTimes n
-	--		putStr "\n"
-	--		printBoard (n-1)
-
-	--printRow 0 = return ()
-	--printRow n =
-	--	do
-	--		take 10(repeat getRow n)
-
-	printBoard 0 = 0
-	printBoard n = 
-		do
-			_ <- printRow n
-			--putStr "\n"
-			printBoard (n-1)
-
-
-			--printBoard (n-1)
-	getBoolean :: Bool -> [Char]
-	getBoolean n = 
-		if n == True
-			then "1"
-		else 
-			"0"
+	printBoard :: [[Int]] -> IO ()
+	printBoard = putStrLn . unlines . listValues
+	listValues :: [[Int]] -> [String]
+	listValues = map (map valueOf)
 
