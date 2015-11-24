@@ -6,8 +6,8 @@ module Battleship where
 	type Board = [[Int]]
 	type Board1 = [[Integer]]
 	type Coordinates = (Int, Int, Bool)
+	type Coordinate = (Int, Int)
 
-    cdd x = ord x
 
 	getBoolean :: Bool -> [Char]
 	getBoolean n = 
@@ -26,7 +26,7 @@ module Battleship where
 
 	mkBoard1 :: [Integer] -> [Integer] -> [Integer] -> [Integer] ->
 				[Integer] -> [Integer] -> [Integer] -> [Integer] -> 
-				[Integer] -> [Integer] ->Board1
+				[Integer] -> [Integer] -> Board1
 	mkBoard1 row1 row2 row3 row4 row5 row6 row7 row8 row9 row10= [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10]
 	board1 = mkBoard1 list list list list list list list list list list 
 	--mkBoard1 n = 
@@ -43,7 +43,14 @@ module Battleship where
 	getY (_,y,_) = y
 	getDir (_,_,dir) = dir
 	--isShipPlaceable n x y dir board
-	
+	convertStringToCoordinates :: String -> Coordinate
+	convertStringToCoordinates ['(', x, ',', y, ')'] = ((ord x) - (ord '0') + 1, (ord y) - (ord '0') + 1)
+	convertStringToCoordinates _ = (-1, -1)
+
+	convertStringToCoordinates1 :: String -> Coordinates
+	convertStringToCoordinates1 ['(', x, ',', y, ',', dir, ')'] = ((ord x) - (ord '0') + 1, (ord y) - (ord '0') + 1)
+	convertStringToCoordinates1 _ = (-1, -1, d)
+
 	placeShip x y ship board = [replace x ship row]
 		where 
 			row = board !! y
@@ -54,6 +61,7 @@ module Battleship where
 	     | index == 0 = newVal:xs
 	     | otherwise = x:replace (index-1) newVal xs
 
+	-- Cheat Places     
 	valueOf :: Int -> Char
 	valueOf 0 = '0' -- Default Place
 	valueOf 1 = 'M' -- Minesweeper
@@ -77,4 +85,25 @@ module Battleship where
 	placeShip1 (x,y,dir) = if isShipPlaceable (x,y,dir) == False then getBoolean(False)
 	                      else getBoolean(True)
 
-    
+ --   play :: [Board] -> [[Ship]] -> IO ()
+	--play board ships = do
+ --       printField (last board) (last ships)
+ --       (newField, newShipList) <- fireWithEveryShip (last board, last ships) 1
+ --       if length newShipList == 0 then
+ --           do
+ --             putStrLn ("\n Game over!\n")
+ --             printField newField newShipList
+ --       else
+ --           play [newField] [newShipList]
+
+ --   inputShip :: [Ship] -> Int -> IO Ship
+	--inputShip placedShips len = do
+	--    putStrLn ("Enter the coordinates of the ship of length " ++ show len ++ "?")
+	--    string <- getLine
+	--    let stringCoords = splitCoordinatesInString string
+	--    let coords = map convertStringToCoordinates stringCoords
+	--    if validateShipCoordinates placedShips coords len then
+	--        return coords
+	--    else
+	--        inputShip placedShips len
+

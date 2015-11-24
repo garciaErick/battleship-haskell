@@ -4,11 +4,12 @@ module Main where
 	main = do
 		putStrLn "Where do you want to place your ship Size x y dir"
 		coordinates <- getLine
+
 		putStr("Size:")
-		--print(x)	
+		print(convertStringToCoordinates coordinates)	
 		--putStr("x:")
-		--print(coordinates !! 2)	
+		--print(x)	
 		--putStr("y:")
-		--print(coordinates !! 4)	
+		--print(y)	
 		--putStr("dir:")
-		--print(coordinates !! 6)	
+		--print(dir)	
