@@ -47,9 +47,18 @@ module Battleship where
 	convertStringToCoordinates ['(', x, ',', y, ')'] = ((ord x) - (ord '0') + 1, (ord y) - (ord '0') + 1)
 	convertStringToCoordinates _ = (-1, -1)
 
-	convertStringToCoordinates1 :: String -> Coordinates
-	convertStringToCoordinates1 ['(', x, ',', y, ',', dir, ')'] = ((ord x) - (ord '0') + 1, (ord y) - (ord '0') + 1)
-	convertStringToCoordinates1 _ = (-1, -1, d)
+	list1 = [1,2,3,4,5,6,7,8,9,10]
+	replaceValues n list
+	     | n == 0 = newList
+	     | otherwise = 
+	     	do 
+	     		replaceValues (n-1) newList
+	     		where 
+	     			newList = replace n 6 list
+	
+		--if n == 0 
+		--	then replace n 6 list1
+		--else 
 
 	placeShip x y ship board = [replace x ship row]
 		where 
