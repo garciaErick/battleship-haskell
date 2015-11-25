@@ -6,10 +6,4 @@ module Main where
 		coordinates <- getLine
 
 		putStr("Size:")
-		--print(convertStringToCoordinates coordinates)	
-		--putStr("x:")
-		--print(x)	
-		--putStr("y:")
-		--print(y)	
-		--putStr("dir:")
-		--print(dir)	
+

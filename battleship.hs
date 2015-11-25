@@ -1,7 +1,14 @@
 import Data.List
 import System.IO
 type Board = [[Bool]]
-
+    --Do not Erase
+	--tuple1 = (1,2,True)	
+	--getX (x,_,_) = x
+	--getY (_,y,_) = y
+	--getDir (_,_,dir) = dir
+    --uiPlaceShips n
+		--| shipsPlaced == 5 = 2
+		--| otherwise = 1
 mkBoard :: Int -> Board
 mkBoard 0 = [[]]
 mkBoard n = 
