@@ -27,15 +27,29 @@ module Battleship where
 	mkBoard1 :: [Integer] -> [Integer] -> [Integer] -> [Integer] ->
 				[Integer] -> [Integer] -> [Integer] -> [Integer] -> 
 				[Integer] -> [Integer] -> Board1
-	mkBoard1 row1 row2 row3 row4 row5 row6 row7 row8 row9 row10= [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10]
+	mkBoard1 row1 row2 row3 row4 row5 row6 row7 row8 row9 row10 = [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10]
 	board1 = mkBoard1 list list list list list list list list list list 
+
+	mkBoard2 [[rows]] = [[rows]]
+	updatedBoard n newRow board= board1
+
+					--row0 = getRow 0 board
+	     			--row1 = getRow 1 board
+	     			--row2 = getRow 2 board
+	     			--row3 = getRow 3 board
+	     			--row4 = getRow 4 board
+	     			--row5 = getRow 5 board
+	     			--row6 = getRow 6 board
+	     			--row7 = getRow 7 board
+	     			--row8 = getRow 8 board
+	     			--row9 = getRow 9 board
 	--mkBoard1 n = 
 	--	if n >= 0 
 	--		then take n (repeat (take n (repeat 0)))
 	--	else [[0]]
 
 	board = mkBoard 10
-	getRow n = board !! n
+	getRow n board = board !! n
 	--printRow n = [ toString x | x <- getRow n]
 	--placeShip ::  Coordinate -> Board
 	tuple1 = (1,2,True)
@@ -48,19 +62,18 @@ module Battleship where
 	convertStringToCoordinates _ = (-1, -1)
 
 	list1 = [1,2,3,4,5,6,7,8,9,10]
-	replaceValues n list
-	     | n == 0 = newList
+	replaceValues n x y ship board
+	     | index == x = return newBoard
 	     | otherwise = 
 	     	do 
-	     		replaceValues (n-1) newList
+	     		replaceValues (n-1) x y ship newBoard
 	     		where 
-	     			newList = replace n 6 list
-	
-		--if n == 0 
-		--	then replace n 6 list1
-		--else 
+	     			newBoard = insertRowAt y newRow board
+	     			newRow = replace index ship row
+	     			row = getRow y board
+	     			index = (n-1)+x
 
-	placeShip x y ship board = [replace x ship row]
+	placeShip n x y ship board = [replace x ship row]
 		where 
 			row = board !! y
 			ship = 1
@@ -115,4 +128,10 @@ module Battleship where
 	--        return coords
 	--    else
 	--        inputShip placedShips len
-
+	--let (as,bs) = splitAt z xs   in   as ++ [new_element] ++ bs
+	insertRowAt :: Int -> [Integer]-> Board1 -> Board1 
+	insertRowAt z y board = as ++ [y] ++ cs
+                where 
+                  	(as,bs) = splitAt z board
+                	cs = drop 1 bs
+	--let (ys,zs) = splitAt n xs   in   ys ++ (tail zs)
