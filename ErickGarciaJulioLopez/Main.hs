@@ -4,20 +4,6 @@ module Main where
 	import Battleship
 	import System.IO
 	import System.Random
-
-	printCheatBoard1 :: [[Int]] -> IO ()
-	printCheatBoard1 = putStrLn . unlines . listCheatValues
-	listCheatValues1 :: [[Int]] -> [String]
-	listCheatValues1 = map (map cheatValue1)
-	cheatValue1 :: Int -> Char
-	cheatValue1 0 = '.' -- Default Place
-	cheatValue1 1 = 'M' -- Minesweeper
-	cheatValue1 2 = 'S' -- Submarine
-	cheatValue1 3 = 'F' -- Frigate
-	cheatValue1 4 = 'B' -- Battleship
-	cheatValue1 5 = 'A' -- Aircraft Carrier
-	cheatValue1 6 = 'x' -- Place Hit
-	cheatValue1 _ = 'O' -- Place Missed
 	placeAllShips board n =
 		do
 			x <- randomRIO(0,9)
@@ -45,6 +31,10 @@ module Main where
 			board <- placeAllShips board 2
 			board <- placeAllShips board 1
 			uiHitPractice board
+			gaben
+	mainDebug =
+		do
+			uiHitPractice boardWithShipsInOrder
 			gaben
 	gaben =
 		do
