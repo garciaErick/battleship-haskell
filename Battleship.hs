@@ -12,7 +12,7 @@ module Battleship where
 	--Generate a Random Number to place ships at a random place
 	random a b = 
 		do
-			g <- getStdGen
+			g <- getStdGen	
 			randomRIO (a,b)
 	--Replacing a value in a list
 	replace index newVal (x:xs)
@@ -48,16 +48,25 @@ module Battleship where
                   	(as,bs) = splitAt z board
                 	cs = drop 1 bs    
 	placeShipx n x y ship board =
-		do
-			let row = getRow y board
-			let index = (n-1) + x
-			let newRow = replace index ship row 
-			let newBoard = insertRowAt y newRow board
-			if index == x then newBoard
-	     		else 
-	     			if(isShipPlaceable n x y ship board) 
-	     				then placeShipx (n-1) x y ship newBoard
-	     				else board
+			let row = getRow y board in
+				let index = (n-1) + x in
+					let newRow = replace index ship row in
+						let newBoard = insertRowAt y newRow board in
+							if index == x then newBoard
+					     		else 
+					     			if(isShipPlaceableX n x y ship board) 
+					     				then placeShipx (n-1) x y ship newBoard
+					     				else board
+	placeShipy n x y ship board =
+		let row = getRow y board in
+			let index = (n-1) + x in
+				let newRow = replace index ship row in
+					let newBoard = insertRowAt y newRow board in
+						if index == x then newBoard
+				     		else 
+				     			if(isShipPlaceableY n x y ship board) 
+				     				then placeShipy (n-1) (x+1) (y+1) ship newBoard
+				     				else board
 	hit x y board
 		| isHit == True = placeShipx 1 x y 6 board --Theres is a ship in the coordinate
 		| (getCoordinate x y board) == 6 = placeShipx 1 x y 6 board --You have already hit this place
@@ -81,6 +90,7 @@ module Battleship where
   		where
 	  		row = getRow y board
 	  		coordinate = row !! x
+
 	validateCoordinate :: Int -> Int -> Board -> Bool
 	validateCoordinate x y board = if ((x < 0 || x > 9) && (y < 0 || y > 9))
 									then  
@@ -89,14 +99,19 @@ module Battleship where
                             		do
 										if isShipPlaced x y board then False
 											else True
-	isShipPlaceable n x y ship board
+	isShipPlaceableX n x y ship board
 	     | n == 0 = True
 	     | otherwise = do 
-	     	if validateCoordinate x y board
+	     	if (validateCoordinate x y board) && (x+n <= 10) && (y+n <= 10)
 	     		then
-	     			do
-	     				let index = (n-1) + x
-	     				isShipPlaceable (n-1) (x+1) y ship board
+	     					isShipPlaceableX (n-1) (x+1) y ship board
+			else False
+	isShipPlaceableY n x y ship board
+	     | n == 0 = True
+	     | otherwise = do 
+	     	if (validateCoordinate x y board) && (x+n <= 10) && (y+n <= 10)
+	     		then
+	     					isShipPlaceableY (n-1) x (y+1) ship board
 			else False
 	--Print Regular Board
 	printBoard :: [[Int]] -> IO ()
@@ -104,28 +119,28 @@ module Battleship where
 	listValues :: [[Int]] -> [String]
 	listValues = map (map valueOf)
 	valueOf :: Int -> Char
-	valueOf 0 = '0' -- Default Place
-	valueOf 1 = '0' -- Minesweeper
-	valueOf 2 = '0' -- Submarine
-	valueOf 3 = '0' -- Frigate
-	valueOf 4 = '0' -- Battleship
-	valueOf 5 = '0' -- Aircraft Carrier
+	valueOf 0 = '.' -- Default Place
+	valueOf 1 = '.' -- Minesweeper
+	valueOf 2 = '.' -- Submarine
+	valueOf 3 = '.' -- Frigate
+	valueOf 4 = '.' -- Battleship
+	valueOf 5 = '.' -- Aircraft Carrier
 	valueOf 6 = 'x' -- Place Hit
-	valueOf _ = '*' -- Place Missed
+	valueOf _ = 'O' -- Place Missed
 	--Print Cheat Board  
 	printCheatBoard :: [[Int]] -> IO ()
 	printCheatBoard = putStrLn . unlines . listCheatValues
 	listCheatValues :: [[Int]] -> [String]
 	listCheatValues = map (map cheatValue)
 	cheatValue :: Int -> Char
-	cheatValue 0 = '0' -- Default Place
+	cheatValue 0 = '.' -- Default Place
 	cheatValue 1 = 'M' -- Minesweeper
 	cheatValue 2 = 'S' -- Submarine
 	cheatValue 3 = 'F' -- Frigate
 	cheatValue 4 = 'B' -- Battleship
 	cheatValue 5 = 'A' -- Aircraft Carrier
 	cheatValue 6 = 'x' -- Place Hit
-	cheatValue _ = '*' -- Place Missed
+	cheatValue _ = 'O' -- Place Missed
 	--Playing Battleship without cheating
 	uiHitShips :: Board -> IO String
 	uiHitShips board =  
