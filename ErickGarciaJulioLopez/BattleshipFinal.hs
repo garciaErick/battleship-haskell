@@ -1,6 +1,6 @@
 --This Code was done in collaboration between 
 --Erick Garcia and Julio Lopez Molinar
-module Battleship where
+module BattleshipFinal where
 	import Data.Char
 	import Data.List
 	import System.IO

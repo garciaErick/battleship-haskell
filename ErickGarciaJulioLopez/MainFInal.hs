@@ -1,7 +1,7 @@
 --This Code was done in collaboration between 
 --Erick Garcia ayy Julio Lopez Molinar
 module Main where
-    import Battleship
+    import BattleshipFinal
     import System.IO
     import System.Random
     placeAllShips board n =
